@@ -19,7 +19,7 @@ const startGame = async (chatID) => {
 const start = () => {
     bot.setMyCommands([
         {command: '/start', description: 'Старт'},
-        {command: '/info', description: 'Отримати інформацію про юзера'},
+        {command: '/info', description: 'Отримати інформацію про мене'},
         {command: '/game', description: 'Ігра відгадай цифру'}
     ]);
     
@@ -29,8 +29,11 @@ const start = () => {
     
         if (txt === '/start') {
             await bot.sendSticker(chatID, 
-                'https://tlgrm.ru/_/stickers/d06/e20/d06e2057-5c13-324d-b94f-9b5a0e64f2da/4.webp')
-            return bot.sendMessage(chatID, `Вітаємо ти підписався на нашого бота`);
+                //'https://tlgrm.ru/_/stickers/d06/e20/d06e2057-5c13-324d-b94f-9b5a0e64f2da/4.webp' // Моя повага смайл
+                // 'https://cdn.tlgrm.app/stickers/1f9/b87/1f9b8736-fed1-3322-a520-441a873962ac/192/1.webp' // Привітик сердечко
+                'https://cdn.tlgrm.app/stickers/34a/f35/34af354a-b3bf-4e91-8d95-ee9ac6fc3df8/192/1.webp')
+                
+            return bot.sendMessage(chatID, `Привітик. Як справи ?`);
         }
 
         if (txt === '/info') {
@@ -40,13 +43,14 @@ const start = () => {
         if(txt === '/game'){
             return startGame(chatID);
         }
-        return bot.sendMessage(chatID, 'Я тебе не розумію !')
+        return bot.sendMessage(chatID, 'Я тебе не розумію ')
         
     });
 
     bot.on('callback_query', msg => {
         const data = msg.data;
         const chatID = msg.message.chat.id;
+        // console.log(chatID)        
 
         if(data === '/again') {
             return startGame(chatID);
@@ -58,7 +62,7 @@ const start = () => {
                  againOptions)
         } else {
             return bot.sendMessage(chatID,
-                 `Нажаль ти не вгадав, бот загадав цифру ${chats[chatID]}`,
+                 `От халепа, бот загадав цифру ${chats[chatID]}`,
                  againOptions)
 
         }
